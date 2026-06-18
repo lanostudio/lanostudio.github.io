@@ -224,7 +224,7 @@ input[type=radio]:checked + .kit-label{border-color:#004B23;background:#f0fdf4;}
         <div class="pix-label-txt">Após preencher, faça o PIX</div>
         <div class="pix-key-txt">82999203939</div>
         <div class="pix-hint">Envie o comprovante junto com seus dados</div>
-        <button class="btn-copy" onclick="copiarPix(82999203939)">📋 Copiar chave PIX</button>
+        <button class="btn-copy" onclick="copiarPix()">📋 Copiar chave PIX</button>
       </div>
 
       <button class="btn-wa" onclick="enviar()">
@@ -285,14 +285,11 @@ function verFoto(input){
   reader.readAsDataURL(input.files[0]);
 }
 
-function copiarPix(btn){
-  var chave='82999203939';
-  if(navigator.clipboard&&navigator.clipboard.writeText){
-    navigator.clipboard.writeText(chave).then(function(){
-      btn.textContent='✅ Copiado!';
-      setTimeout(function(){btn.textContent='📋 Copiar chave PIX';},2500);
-    }).catch(function(){fallback(chave,btn);});
-  } else { fallback(chave,btn); }
+function copiarPix() {
+  const chave = "82999203939";
+  navigator.clipboard.writeText(chave).then(() => {
+    alert("Chave Pix copiada!");
+  });
 }
 function fallback(txt,btn){
   var ta=document.createElement('textarea');
@@ -303,16 +300,14 @@ function fallback(txt,btn){
   document.body.removeChild(ta);
 }
 
-function enviar(){
-  var kit='Kit 1 (1 personagem) — R$25';
-  var radios=document.querySelectorAll('input[name="kit"]');
-  for(var i=0;i<radios.length;i++){if(radios[i].checked){kit=radios[i].value;break;}}
-  var nome=document.getElementById('nome').value.trim();
-  var data=document.getElementById('data').value.trim();
-  var time=document.getElementById('time').value.trim();
-  var altura=document.getElementById('altura').value.trim();
-  var peso=document.getElementById('peso').value.trim();
-  var msg='🟢 *PEDIDO — FIGURINHA PERSONALIZADA COPA 2026*
+function enviar() {
+  const kit = document.getElementById("kit").value;
+  const nome = document.getElementById("nome").value;
+  const numero = "5582999203939";
+  const mensagem = `Olá, gostaria de encomendar o ${kit}. Meu nome é ${nome}.`;
+  const url = `https://api.whatsapp.com/send?phone=${numero}&text=${encodeURIComponent(mensagem)}`;
+  window.open(url, "_blank");
+}
 
 ';
   msg+='📦 *Kit:* '+kit+'
