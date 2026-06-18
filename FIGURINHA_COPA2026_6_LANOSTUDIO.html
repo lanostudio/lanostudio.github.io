@@ -304,7 +304,7 @@ function enviar() {
   const kit = document.getElementById("kit").value;
   const nome = document.getElementById("nome").value;
   const numero = "5582999203939";
-  const mensagem = `Olá, gostaria de encomendar o ${kit}. Meu nome é ${nome}.`;
+  const mensagem = 'Olá, gostaria de encomendar o ${kit}. Meu nome é ${nome}.';
   const url = `https://api.whatsapp.com/send?phone=${numero}&text=${encodeURIComponent(mensagem)}`;
   window.open(url, "_blank");
 }
