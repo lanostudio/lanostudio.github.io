@@ -285,11 +285,17 @@ function verFoto(input){
   reader.readAsDataURL(input.files[0]);
 }
 
-function copiarPix() {
-  const chave = "82999203939";
-  navigator.clipboard.writeText(chave).then(() => {
-    alert("Chave Pix copiada!");
-  });
+function copiarPix(btn) {
+    const chave = "82999203939";
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(chave).then(function() {
+            alert("Chave Pix copiada!");
+        }).catch(function(err) {
+            fallback(chave, btn);
+        });
+    } else {
+        fallback(chave, btn);
+    }
 }
 function fallback(txt,btn){
   var ta=document.createElement('textarea');
@@ -301,14 +307,14 @@ function fallback(txt,btn){
 }
 
 function enviar() {
-  const kit = document.getElementById("kit").value;
-  const nome = document.getElementById("nome").value;
-  const numero = "5582999203939";
-  const mensagem = 'Olá, gostaria de encomendar o ${kit}. Meu nome é ${nome}.';
-  const url = `https://api.whatsapp.com/send?phone=${numero}&text=${encodeURIComponent(mensagem)}`;
-  window.open(url, "_blank");
+    const kitSelecionado = document.querySelector('input[name="kit"]:checked');
+    const kit = kitSelecionado ? kitSelecionado.value : "Nenhum kit selecionado";
+    const nome = document.getElementById("nome").value;
+    const numero = "5582999203939";
+    const mensagem = `Olá, gostaria de encomendar o ${kit}. Meu nome é ${nome}.`;
+    const url = `https://api.whatsapp.com/send?phone=${numero}&text=${encodeURIComponent(mensagem)}`;
+    window.open(url, "_blank");
 }
-
 ';
   msg+='📦 *Kit:* '+kit+'
 
